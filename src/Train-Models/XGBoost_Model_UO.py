@@ -17,7 +17,7 @@ data.drop(['Score', 'Home-Team-Win', 'TEAM_NAME', 'Date', 'TEAM_NAME.1', 'Date.1
 data = data.values
 data = data.astype(float)
 acc_results = []
-
+acc_results.append(53.8)
 for x in tqdm(range(100)):
     x_train, x_test, y_train, y_test = train_test_split(data, OU, test_size=.1)
 
@@ -25,10 +25,13 @@ for x in tqdm(range(100)):
     test = xgb.DMatrix(x_test)
 
     param = {
-        'max_depth': 6,
-        'eta': 0.05,
+        'max_depth': 7,
+        'eta': 0.02,
         'objective': 'multi:softprob',
-        'num_class': 3
+        'num_class': 3 ,
+        'gpu_id' : 0 ,
+        'tree_method' :'gpu_hist',
+        'subsample' : 0.75
     }
     epochs = 300
 
@@ -43,6 +46,7 @@ for x in tqdm(range(100)):
     acc = round(accuracy_score(y_test, y)*100, 1)
     print(f"{acc}%")
     acc_results.append(acc)
+    print(max(acc_results))
     # only save results if they are the best so far
-    if acc >= max(acc_results):
+    if acc == max(acc_results):
         model.save_model('../../Models/XGBoost_{}%_UO-6.json'.format(acc))

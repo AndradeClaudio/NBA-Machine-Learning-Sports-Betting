@@ -19,7 +19,7 @@ data = data.values
 
 data = data.astype(float)
 acc_results = []
-acc_results.append(68.6)
+
 for x in tqdm(range(100)):
     x_train, x_test, y_train, y_test = train_test_split(data, margin, test_size=.1)
 
@@ -27,13 +27,13 @@ for x in tqdm(range(100)):
     test = xgb.DMatrix(x_test, label=y_test)
 
     param = {
-        'max_depth': 3,
-        'eta': 0.01,
+        'max_depth': 7,
+        'eta': 0.02,
         'objective': 'multi:softprob',
         'num_class': 2 ,
         'gpu_id' : 0 ,
         'tree_method' :'gpu_hist',
-        'subsample' : 0.50
+        'subsample' : 0.75
 
     }
     epochs = 500
@@ -49,5 +49,5 @@ for x in tqdm(range(100)):
     print(f"{acc}%")
     acc_results.append(acc)
     # only save results if they are the best so far
-    if acc >= max(acc_results):
+    if acc == max(acc_results):
         model.save_model('../../Models/XGBoost_{}%_ML-2.json'.format(acc))
