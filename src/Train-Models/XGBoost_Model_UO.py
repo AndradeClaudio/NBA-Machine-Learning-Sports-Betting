@@ -44,5 +44,5 @@ for x in tqdm(range(100)):
     print(f"{acc}%")
     acc_results.append(acc)
     # only save results if they are the best so far
-    if acc == max(acc_results):
+    if acc >= max(acc_results):
         model.save_model('../../Models/XGBoost_{}%_UO-6.json'.format(acc))
