@@ -17,7 +17,7 @@ data.drop(['Score', 'Home-Team-Win', 'TEAM_NAME', 'Date', 'TEAM_NAME.1', 'Date.1
 data = data.values
 data = data.astype(float)
 acc_results = []
-acc_results.append(53.8)
+#acc_results.append(53.8)
 for x in tqdm(range(100)):
     x_train, x_test, y_train, y_test = train_test_split(data, OU, test_size=.1)
 
